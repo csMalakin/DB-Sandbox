@@ -144,7 +144,7 @@ function createTableOfNumbersArray(arr) {
     });     
   
   }
-
+// testing how to load a json, only works on live server
   function loadJSON(path, success, error)
   {
       var xhr = new XMLHttpRequest();
@@ -162,5 +162,17 @@ function createTableOfNumbersArray(arr) {
       };
       xhr.open("GET", path, true);
       xhr.send();
+      
   }
-
+//this is how to call the function
+//   loadJSON('scene.json',
+//          function(data) { console.log(data); },
+//          function(xhr) { console.error(xhr); }
+// );
+let testArray=[]
+function testFunction(){
+  loadJSON('scene.json',
+         function(data) { testArray=data },
+         function(xhr) { console.error(xhr); }
+);
+}
