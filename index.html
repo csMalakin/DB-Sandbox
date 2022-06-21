@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="description" content="Your description goes here">
+    	<meta name="keywords" content="one, two, three">
+
+		<title>DB-Sanbox</title>
+
+		<!-- external CSS link -->
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+		<section class="input">
+		<form id="form1">
+			<ul class="flex-outer">
+				<li>
+					<label for="id">MitarbeiterID</label>
+					<input type="text" id="id" placeholder="MitarbeiterID eingeben">
+				  </li>
+			  <li>
+				<label for="first-name">Vorname</label>
+				<input type="text" id="firstName" placeholder="Vornmae eingeben">
+			  </li>
+			  <li>
+				<label for="last-name">Nachname</label>
+				<input type="text" id="lastName" placeholder="Nachname eingeben">
+			  </li>
+			  
+			  <li>
+				<label for="salary">Gehalt</label>
+				<input type="text" id="salary" placeholder="Gehalt eingeben">
+			  </li>
+			  
+			  
+			  <li>
+				<a class="button" id="add" href="#">Hinzufügen</a>
+			  </li>
+			</ul>
+		  </form>
+		</section>
+		  
+		
+		
+		
+
+
+		<section class="tableArea">
+			<h2>Mitarbeiter Liste</h2>
+			<table class="center" id="mitarbeiterListe">
+				<tr>
+					<th>ID</th>
+					<th>Vorname</th>
+					<th>Nachname</th>			  
+					<th>Gehalt</th>
+				</tr>
+				
+			  </table>
+
+			
+		</section>
+
+		<a href="#" class="button" id="downloadAnchorElem">download</a>
+
+
+		<section class="numbersInput clearfix">
+			<div class="col-50">
+			<form id="form2">
+				<ul class="flex-outer">
+					<li>
+						<label for="amountNumbers">Wie viele Zahlen sollen generiert werden?</label>
+						<input type="text" id="amountNumbers" placeholder="Wie viele Zahlen?">
+					  </li>
+				  <li>
+					<label for="startNumbers">Anfang</label>
+					<input type="text" id="startNumbers" placeholder="Anfang vom Zahlenbereich">
+				  </li>
+
+				  <li>
+					<label for="endNumbers">Ende</label>
+					<input type="text" id="endNumbers" placeholder="Ende vom Zahlenbereich">
+				  </li>
+				  
+				  
+				 
+				  
+				  
+				  <li>
+					<a class="button" id="generateNumbers" href="#">Zahlen generieren</a>
+				  </li>
+				</ul>
+			  </form>
+
+			</div>
+			<div class="col-50">
+				<form id="form3">
+					<ul class="flex-outer">
+						<li>
+							<a class="button" id="zahlenSortieren" href="#">Zahlen sortieren</a>
+						  </li>
+						<li>
+							<label for="numberToAdd">Welche Zahl soll dem Array hinzugefüt werden?</label>
+							<input type="text" id="amountNumbers" placeholder="Zahl eingeben">
+						  </li>
+						  
+					  
+					  
+						
+					 
+					  
+					  
+					  <li>
+						<a class="button" id="zahlHinzufügen" href="#">Zahl Hinzufügen</a>
+					  </li>
+					</ul>
+				  </form>
+	
+				</div>
+			</section>
+
+			<section class="tableArea clearfix">
+				<div class="col-50">
+				<h2>Zahlen Array</h2>
+				<table class="center" id="zahlenArray">
+					<tr>
+						<th>Index</th>
+						<th>Zahl</th>			
+					</tr>
+				
+					
+					
+				  </table>
+				</div>
+				  
+				 <div class="col-50">
+				  <h2>Zahlen Array sortiert</h2>
+				  <table class="center" id="zahlenArraySortiert">
+					  	<tr>
+						  <th>Index</th>
+						  <th>Zahl</th>			
+					  	</tr>
+					  
+					  
+					  
+					</table>
+				</div>
+				
+			</section>
+
+			<section>test</section>
+
+
+		<script src="js/main.js"></script>
+
+	</body>
+</html>
