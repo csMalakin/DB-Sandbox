@@ -6,18 +6,21 @@ let salary=document.querySelector('#salary')
 let dlAnchorElem = document.getElementById('downloadAnchorElem')
 let generateNumbersButton = document.getElementById('generateNumbers')
 let sortNumbersButton=document.getElementById('zahlenSortieren')
-
+let zahlHinzufügen=document.getElementById('zahlHinzufügen')
 
 
 add.addEventListener('click', submit)
 generateNumbersButton.addEventListener('click', createTableOfNumbersArray)
 dlAnchorElem.addEventListener('click',downloadFile)
 sortNumbersButton.addEventListener('click', sortTableOfNumbersArray)
+zahlHinzufügen.addEventListener('click', zahlHinzufügenClicked )
 
 const mitarbeiter= [];
 
 
 document.getElementById('form1').reset()
+document.getElementById('form2').reset()
+document.getElementById('form3').reset()
 
 let NeuerMitarbeiter = function(newId,newFirstName,newLastName,newSalary) {
   newId=id.value
@@ -106,10 +109,15 @@ return numbers
 }
 
 
-
+let isTableEmpty=true
+let isSortedEmpty=true
 let safeArrayOfNumbers=[]
 function createTableOfNumbersArray(arr) {
     arr=generateNumbers();
+    if (!isTableEmpty) {
+      deleteRows()
+    }
+
     arr.forEach((element, index) => {
       let tableRef = document.getElementById('zahlenArray');
       let newRow=tableRef.insertRow();
@@ -121,13 +129,18 @@ function createTableOfNumbersArray(arr) {
       let numberText = document.createTextNode(element)
       insertNumber.appendChild(numberText)
 
-    });     
-  safeArrayOfNumbers=arr
+    });
+    isTableEmpty=false
+    // document.getElementById('form2').reset()     
+    safeArrayOfNumbers=arr
   }
 
-
+  let sortedArray=[]
   function sortTableOfNumbersArray(arr) {
     arr=safeArrayOfNumbers;
+    if (!isSortedEmpty) {
+      deleteRows()
+    }
     arr.sort((a,b)=>a-b)
     arr.forEach((element, index) => {
       let tableRef = document.getElementById('zahlenArraySortiert');
@@ -141,7 +154,9 @@ function createTableOfNumbersArray(arr) {
       insertNumber.appendChild(numberText)
       console.log(element)
 
-    });     
+    });
+    isSortedEmpty=false
+    sortedArray=arr.sort((a,b)=>a-b)
   
   }
 // testing how to load a json, only works on live server
@@ -175,4 +190,76 @@ function testFunction(){
          function(data) { testArray=data },
          function(xhr) { console.error(xhr); }
 );
+}
+
+function deleteRows(){
+  document.querySelectorAll('table tr:not(.header)').forEach((tr) => {
+    tr.remove();
+    isTableEmpty=true
+    isSortedEmpty=true
+});
+}
+let numberToCheck=0;
+let showIndex=0
+
+function addNumberToSortedArray(n,arr) {
+let output=[]
+n=Number(document.getElementById('numberToAdd').value)
+arr=sortedArray
+let test=n-(arr[0])
+let dif=(arr[arr.length-1]-arr[0])
+let steps=Math.round(dif/(arr.length-1))
+let checkIndex=Math.floor(test/steps)+1
+
+
+console.log(test)
+console.log(dif)
+console.log(steps)
+console.log(checkIndex)
+console.log(arr[checkIndex])
+
+if(n<arr[checkIndex]){
+  do {checkIndex--
+    console.log(`count ${checkIndex}`)
+  } while (n<arr[checkIndex]);
+}
+
+
+if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
+   output=arr.splice(checkIndex+1,0,n)
+   numberToCheck=n
+   showIndex=checkIndex+1
+   console.log('test')
+}
+
+}
+
+function zahlHinzufügenClicked(){
+  let n=document.getElementById('numberToAdd').value
+  if(n!==""){
+    RuntimeCheck(addNumberToSortedArray)    
+    textZahlHinzugefügt()
+  }
+  else return
+}
+
+
+
+
+function textZahlHinzugefügt(){
+  let n=document.getElementById('numberToAdd').value
+  if(n!==""){
+    
+     document.querySelector('#zahlWurdeHinzgefügt').innerText = `Die Zahl ${numberToCheck} wurde an Index ${showIndex} hinzugefügt`
+  }
+  else { document.querySelector('#zahlWurdeHinzgefügt').innerText = `Es wurde keine Zahl eingegeben`
+
+  }
+}
+
+function RuntimeCheck(functionToCheck) {
+  var startTime = performance.now()
+  this.functionToCheck=functionToCheck()
+  var endTime = performance.now()
+  console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
 }

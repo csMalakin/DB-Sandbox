@@ -36,7 +36,7 @@
 			  
 			  
 			  <li>
-				<a class="button" id="add" href="#">Hinzufügen</a>
+				<a class="button" id="add" href="#mitarbeiterListe">Hinzufügen</a>
 			  </li>
 			</ul>
 		  </form>
@@ -48,21 +48,26 @@
 
 
 		<section class="tableArea">
-			<h2>Mitarbeiter Liste</h2>
+			<h2>Mitarbeiterliste</h2>
 			<table class="center" id="mitarbeiterListe">
+				<thead>
 				<tr>
 					<th>ID</th>
 					<th>Vorname</th>
 					<th>Nachname</th>			  
 					<th>Gehalt</th>
 				</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
 				
 			  </table>
 
 			
 		</section>
 
-		<a href="#" class="button" id="downloadAnchorElem">download</a>
+		<a href="#" class="button" id="downloadAnchorElem">download Mitarbeiterliste</a>
 
 
 		<section class="numbersInput clearfix">
@@ -88,7 +93,7 @@
 				  
 				  
 				  <li>
-					<a class="button" id="generateNumbers" href="#">Zahlen generieren</a>
+					<a class="button" id="generateNumbers" href="#zahlenArray">Zahlen generieren</a>
 				  </li>
 				</ul>
 			  </form>
@@ -98,11 +103,11 @@
 				<form id="form3">
 					<ul class="flex-outer">
 						<li>
-							<a class="button" id="zahlenSortieren" href="#">Zahlen sortieren</a>
+							<a class="button" id="zahlenSortieren" href="#zahlenArray">Zahlen sortieren</a>
 						  </li>
 						<li>
 							<label for="numberToAdd">Welche Zahl soll dem Array hinzugefüt werden?</label>
-							<input type="text" id="amountNumbers" placeholder="Zahl eingeben">
+							<input type="text" id="numberToAdd" placeholder="Zahl eingeben">
 						  </li>
 						  
 					  
@@ -112,7 +117,11 @@
 					  
 					  
 					  <li>
-						<a class="button" id="zahlHinzufügen" href="#">Zahl Hinzufügen</a>
+						<a class="button" id="zahlHinzufügen" href="#arrayMitNeuerZahl">Zahl Hinzufügen</a>
+					  </li>
+
+					  <li>
+						<p id="zahlWurdeHinzgefügt" class="bold"></p>
 					  </li>
 					</ul>
 				  </form>
@@ -121,10 +130,10 @@
 			</section>
 
 			<section class="tableArea clearfix">
-				<div class="col-50">
+				<div class="col-33">
 				<h2>Zahlen Array</h2>
 				<table class="center" id="zahlenArray">
-					<tr>
+					<tr class="header">
 						<th>Index</th>
 						<th>Zahl</th>			
 					</tr>
@@ -134,10 +143,10 @@
 				  </table>
 				</div>
 				  
-				 <div class="col-50">
+				 <div class="col-33">
 				  <h2>Zahlen Array sortiert</h2>
 				  <table class="center" id="zahlenArraySortiert">
-					  	<tr>
+					  	<tr class="header">
 						  <th>Index</th>
 						  <th>Zahl</th>			
 					  	</tr>
@@ -146,10 +155,23 @@
 					  
 					</table>
 				</div>
+
+				<div class="col-33">
+					<h2>Zahlen Array mit hinzugefügter Zahl</h2>
+					<table class="center" id="arrayMitNeuerZahl">
+							<tr class="header">
+							<th>Index</th>
+							<th>Zahl</th>			
+							</tr>
+						
+						
+						
+					  </table>
+				  </div>
 				
 			</section>
 
-			<section>test</section>
+			<section id="test">test</section>
 
 
 		<script src="js/main.js"></script>
