@@ -24,10 +24,14 @@
 body {
 
 }
+h2 {
+     height: 3em;
+}
 .input, .numbersInput {
      border: solid black 1px;
      margin: 5em auto;
      max-width: 30em;
+     padding: 2em;
 }
 .flex-outer li {
      display: flex;
@@ -46,7 +50,9 @@ body {
      margin: 0.2em 0;
     
 }
-
+.roomTop{
+     margin-top: 2em;
+}
 .button {
      margin: 1em 0;
 }
@@ -67,6 +73,14 @@ td, th {
     float: left;
 }
 
+.col-33 {
+     width: 33.3333%;
+    float: left;
+}
+
+.bold {
+     font-weight: 700;
+}
 .center{
      
      margin: 0 auto;
@@ -85,8 +99,8 @@ td:first-child, td:last-child {
 }
 
 
-table tr:nth-child(odd) td{
-    background-color: aquamarine;
+table tr:nth-child(2n) td{
+    background-color: lightblue;
  }
 
 
@@ -98,6 +112,10 @@ table tr:nth-child(odd) td{
      
      border-radius: 1em;
      background-color: gainsboro;
+ }
+
+#arrayMitNeuerZahl  .addedNumber {
+     color: red;
  }
 /******************************************
 /* LAYOUT
