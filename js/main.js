@@ -262,12 +262,10 @@ let checkIndex=Math.floor(test/steps)+1
 
 
 if (n<arr[checkIndex]&&n>arr[0]){
-  let counter=0
+  
   while (n<arr[checkIndex]) {
     
-    checkIndex--
-    counter++
-    // console.log(`counter = ${counter}`)^
+    checkIndex--   
     // console.log(checkIndex)
     
   } if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
@@ -299,11 +297,11 @@ else if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
 
 
 else if(n>arr[checkIndex]&&n>arr[checkIndex+1] && n<arr[arr.length-1]){
-  let counter=0
+  
   while (n>arr[checkIndex+1]) {
     
     checkIndex++
-    counter++
+  
     // console.log(`counter = ${counter}`)^
     // console.log(checkIndex)
     
@@ -410,3 +408,12 @@ for(let i=0;i<rows.length;i++){
 }
 }
 }
+  let checkEnterField=document.getElementById('numberToAdd')
+
+  checkEnterField.addEventListener('keypress',function(e){
+    if (e.key==='Enter') {
+      e.preventDefault();
+      zahlHinzufügenClicked();
+      console.log('enter pressed')
+    }
+  })
