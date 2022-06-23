@@ -10,9 +10,9 @@ let zahlHinzufügen=document.getElementById('zahlHinzufügen')
 
 
 add.addEventListener('click', submit)
-generateNumbersButton.addEventListener('click', createTableOfNumbersArray)
+generateNumbersButton.addEventListener('click', generateNumbersClicked)
 dlAnchorElem.addEventListener('click',downloadFile)
-sortNumbersButton.addEventListener('click', sortTableOfNumbersArray)
+sortNumbersButton.addEventListener('click', sortNumbersButtonClicked)
 zahlHinzufügen.addEventListener('click', zahlHinzufügenClicked )
 
 const mitarbeiter= [];
@@ -52,13 +52,15 @@ function addToArray(neu) {
 function submit(){
   addToArray()  
   addToTable()  
-  resetInput()
+  resetInput('form1')
   
   
   }
 
-function resetInput(){
-  document.getElementById('form1').reset()
+function resetInput(form){
+  let getForm=document.getElementById(form)
+  let inputField=Array.from(getForm.querySelectorAll('input'))
+  inputField.forEach(item=>item.value ="")
 }
 
 function addToTable(neu) {
@@ -115,7 +117,7 @@ let safeArrayOfNumbers=[]
 function createTableOfNumbersArray(arr) {
     arr=generateNumbers();
     if (!isTableEmpty) {
-      deleteRows()
+      deleteRows('zahlenArray')
     }
 
     arr.forEach((element, index) => {
@@ -139,7 +141,7 @@ function createTableOfNumbersArray(arr) {
   function sortTableOfNumbersArray(arr) {
     arr=safeArrayOfNumbers;
     if (!isSortedEmpty) {
-      deleteRows()
+      deleteRows('zahlenArraySortiert')
     }
     arr.sort((a,b)=>a-b)
     arr.forEach((element, index) => {
@@ -152,13 +154,50 @@ function createTableOfNumbersArray(arr) {
       insertIndex.appendChild(indexText)
       let numberText = document.createTextNode(element)
       insertNumber.appendChild(numberText)
-      console.log(element)
+      // console.log(element)
 
     });
     isSortedEmpty=false
     sortedArray=arr.sort((a,b)=>a-b)
   
   }
+  let isNewNumberTableEmpty=true
+  function tableWithNewNumber(arr) {
+    arr=sortedArray;
+    if (!isNewNumberTableEmpty) {
+      deleteRows('arrayMitNeuerZahl')
+    }
+    arr.sort((a,b)=>a-b)
+    arr.forEach((element, index) => {
+      let tableRef = document.getElementById('arrayMitNeuerZahl');
+      let newRow=tableRef.insertRow();
+      let insertIndex=newRow.insertCell(0)
+      let insertNumber=newRow.insertCell(1)
+
+      let indexText = document.createTextNode(index)
+      insertIndex.appendChild(indexText)
+      let numberText = document.createTextNode(element)
+      insertNumber.appendChild(numberText)
+      // console.log(element)
+    
+
+    });
+    isNewNumberTableEmpty=false
+    sortedArray=arr.sort((a,b)=>a-b)
+  
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 // testing how to load a json, only works on live server
   function loadJSON(path, success, error)
   {
@@ -192,8 +231,9 @@ function testFunction(){
 );
 }
 
-function deleteRows(){
-  document.querySelectorAll('table tr:not(.header)').forEach((tr) => {
+function deleteRows(id){
+  let table=document.getElementById(id)
+  table.querySelectorAll('table tr:not(.header)').forEach((tr) => {
     tr.remove();
     isTableEmpty=true
     isSortedEmpty=true
@@ -203,7 +243,7 @@ let numberToCheck=0;
 let showIndex=0
 
 function addNumberToSortedArray(n,arr) {
-let output=[]
+
 n=Number(document.getElementById('numberToAdd').value)
 arr=sortedArray
 let test=n-(arr[0])
@@ -212,36 +252,101 @@ let steps=Math.round(dif/(arr.length-1))
 let checkIndex=Math.floor(test/steps)+1
 
 
-console.log(test)
-console.log(dif)
-console.log(steps)
-console.log(checkIndex)
-console.log(arr[checkIndex])
+// console.log(test)
+// console.log(dif)
+// console.log(steps)
+// console.log(checkIndex)
+// console.log(arr[checkIndex])
+// console.log(n)
+// console.log(arr[checkIndex+1])
 
-if(n<arr[checkIndex]){
-  do {checkIndex--
-    console.log(`count ${checkIndex}`)
-  } while (n<arr[checkIndex]);
+
+if (n<arr[checkIndex]&&n>arr[0]){
+  let counter=0
+  while (n<arr[checkIndex]) {
+    
+    checkIndex--
+    counter++
+    // console.log(`counter = ${counter}`)^
+    // console.log(checkIndex)
+    
+  } if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
+    arr.splice(checkIndex+1,0,n)
+    numberToCheck=n
+    showIndex=checkIndex+1
+    checkIndex=Math.floor(test/steps)+1
+    if (showIndex<0){
+     showIndex=0
+    }
 }
+checkIndex=0}
 
 
-if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
-   output=arr.splice(checkIndex+1,0,n)
-   numberToCheck=n
-   showIndex=checkIndex+1
-   console.log('test')
-}
 
-}
 
-function zahlHinzufügenClicked(){
-  let n=document.getElementById('numberToAdd').value
-  if(n!==""){
-    RuntimeCheck(addNumberToSortedArray)    
-    textZahlHinzugefügt()
+else if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
+  arr.splice(checkIndex+1,0,n)
+  numberToCheck=n
+  showIndex=checkIndex+1
+  checkIndex=Math.floor(test/steps)+1
+  
+  if (showIndex<0){
+   showIndex=0
   }
-  else return
+ 
+ 
 }
+
+
+else if(n>arr[checkIndex]&&n>arr[checkIndex+1] && n<arr[arr.length-1]){
+  let counter=0
+  while (n>arr[checkIndex+1]) {
+    
+    checkIndex++
+    counter++
+    // console.log(`counter = ${counter}`)^
+    // console.log(checkIndex)
+    
+  } if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
+    arr.splice(checkIndex+1,0,n)
+    numberToCheck=n
+    showIndex=checkIndex+1
+    checkIndex=Math.floor(test/steps)+1
+    
+    
+    if (showIndex<0){
+     showIndex=0
+    }
+}
+checkIndex=0}
+
+
+
+
+else if(n>arr[arr.length-1]){
+arr.splice(arr.length,0,n)
+numberToCheck=n
+showIndex=arr.length-1
+if (showIndex<0){
+  showIndex=0
+ }
+
+}
+else if(n<arr[0]){
+  arr.splice(0,0,n)
+  numberToCheck=n
+  checkIndex=Math.floor(test/steps)+1
+  showIndex=checkIndex
+  if (showIndex<0){
+    showIndex=0
+   }
+  
+}
+sortedArray=arr
+
+
+}
+
 
 
 
@@ -261,5 +366,47 @@ function RuntimeCheck(functionToCheck) {
   var startTime = performance.now()
   this.functionToCheck=functionToCheck()
   var endTime = performance.now()
-  console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+   console.log(`${functionToCheck} `)
+   console.log(`was called it took ${endTime - startTime} milliseconds`)
+}
+
+function zahlHinzufügenClicked(){
+  let n=document.getElementById('numberToAdd').value
+  if(n!==""){
+    RuntimeCheck(addNumberToSortedArray)    
+    textZahlHinzugefügt()
+    tableWithNewNumber()
+    colorNewNumber()
+    resetInput('form3')
+    console.log(sortedArray)
+   
+  }
+  showIndex=0
+  checkIndex=0
+  
+}
+
+function generateNumbersClicked(){
+  RuntimeCheck(createTableOfNumbersArray)
+  resetInput('form2')
+}
+
+function sortNumbersButtonClicked(){
+  RuntimeCheck(sortTableOfNumbersArray)
+  
+  console.log(sortedArray)
+}
+
+function colorNewNumber(){
+let table =document.getElementById('arrayMitNeuerZahl')
+let rows= table.querySelectorAll('tr')
+let number=numberToCheck
+let index=showIndex
+for(let i=0;i<rows.length;i++){
+  if(parseInt(rows[i].cells[1].innerHTML) == number && parseInt(rows[i].cells[0].innerHTML) == index){
+    rows[i].classList.add("addedNumber")
+    rows[i].setAttribute('id', 'newestNumber')
+    
+}
+}
 }
