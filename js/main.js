@@ -115,7 +115,8 @@ let isTableEmpty=true
 let isSortedEmpty=true
 let safeArrayOfNumbers=[]
 function createTableOfNumbersArray(arr) {
-    arr=generateNumbers();
+    arr=generateNumbers()
+    RuntimeCheck(generateNumbers);
     if (!isTableEmpty) {
       deleteRows('zahlenArray')
     }
@@ -137,6 +138,8 @@ function createTableOfNumbersArray(arr) {
     safeArrayOfNumbers=arr
   }
 
+
+
   let sortedArray=[]
   function sortTableOfNumbersArray(arr) {
     arr=safeArrayOfNumbers;
@@ -144,6 +147,14 @@ function createTableOfNumbersArray(arr) {
       deleteRows('zahlenArraySortiert')
     }
     arr.sort((a,b)=>a-b)
+    
+    isSortedEmpty=false
+    sortedArray=arr.sort((a,b)=>a-b)
+  
+  }
+
+  function createSortedArrayTable(arr){
+    arr=sortedArray;
     arr.forEach((element, index) => {
       let tableRef = document.getElementById('zahlenArraySortiert');
       let newRow=tableRef.insertRow();
@@ -154,13 +165,12 @@ function createTableOfNumbersArray(arr) {
       insertIndex.appendChild(indexText)
       let numberText = document.createTextNode(element)
       insertNumber.appendChild(numberText)
-      // console.log(element)
+      
 
     });
-    isSortedEmpty=false
-    sortedArray=arr.sort((a,b)=>a-b)
-  
   }
+
+
   let isNewNumberTableEmpty=true
   function tableWithNewNumber(arr) {
     arr=sortedArray;
@@ -199,25 +209,25 @@ function createTableOfNumbersArray(arr) {
 
 
 // testing how to load a json, only works on live server
-  function loadJSON(path, success, error)
-  {
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function()
-      {
-          if (xhr.readyState === XMLHttpRequest.DONE) {
-              if (xhr.status === 200) {
-                  if (success)
-                      success(JSON.parse(xhr.responseText));
-              } else {
-                  if (error)
-                      error(xhr);
-              }
-          }
-      };
-      xhr.open("GET", path, true);
-      xhr.send();
+  // function loadJSON(path, success, error)
+  // {
+  //     var xhr = new XMLHttpRequest();
+  //     xhr.onreadystatechange = function()
+  //     {
+  //         if (xhr.readyState === XMLHttpRequest.DONE) {
+  //             if (xhr.status === 200) {
+  //                 if (success)
+  //                     success(JSON.parse(xhr.responseText));
+  //             } else {
+  //                 if (error)
+  //                     error(xhr);
+  //             }
+  //         }
+  //     };
+  //     xhr.open("GET", path, true);
+  //     xhr.send();
       
-  }
+  // }
 //this is how to call the function
 //   loadJSON('scene.json',
 //          function(data) { console.log(data); },
@@ -302,7 +312,7 @@ else if(n>arr[checkIndex]&&n>arr[checkIndex+1] && n<arr[arr.length-1]){
     
     checkIndex++
   
-    // console.log(`counter = ${counter}`)^
+    
     // console.log(checkIndex)
     
   } if(n>=arr[checkIndex]&&n<=arr[checkIndex+1]) {
@@ -385,12 +395,13 @@ function zahlHinzufügenClicked(){
 }
 
 function generateNumbersClicked(){
-  RuntimeCheck(createTableOfNumbersArray)
+  createTableOfNumbersArray()
   resetInput('form2')
 }
 
 function sortNumbersButtonClicked(){
   RuntimeCheck(sortTableOfNumbersArray)
+  createSortedArrayTable()
   
   console.log(sortedArray)
 }
