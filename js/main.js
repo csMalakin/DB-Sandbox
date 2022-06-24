@@ -6,14 +6,19 @@ let salary=document.querySelector('#salary')
 let dlAnchorElem = document.getElementById('downloadAnchorElem')
 let generateNumbersButton = document.getElementById('generateNumbers')
 let sortNumbersButton=document.getElementById('zahlenSortieren')
-let zahlHinzufügen=document.getElementById('zahlHinzufügen')
+let zahlHinzufügenStefan=document.getElementById('zahlHinzufügenStefan')
+let zahlHinzufügenArraySort=document.getElementById('zahlHinzufügenArraySort')
+
+let zahlHinzufügenFindIndexButton=document.getElementById('zahlHinzufügenFindIndex')
 
 
 add.addEventListener('click', submit)
 generateNumbersButton.addEventListener('click', generateNumbersClicked)
 dlAnchorElem.addEventListener('click',downloadFile)
 sortNumbersButton.addEventListener('click', sortNumbersButtonClicked)
-zahlHinzufügen.addEventListener('click', zahlHinzufügenClicked )
+zahlHinzufügenStefan.addEventListener('click', zahlHinzufügenStefanClicked )
+zahlHinzufügenArraySort.addEventListener('click', zahlHinzufügenClickedArraySort )
+zahlHinzufügenFindIndexButton.addEventListener('click', zahlHinzufügenFindIndexClicked)
 
 const mitarbeiter= [];
 
@@ -121,18 +126,18 @@ function createTableOfNumbersArray(arr) {
       deleteRows('zahlenArray')
     }
 
-    arr.forEach((element, index) => {
-      let tableRef = document.getElementById('zahlenArray');
-      let newRow=tableRef.insertRow();
-      let insertIndex=newRow.insertCell(0)
-      let insertNumber=newRow.insertCell(1)
+    // arr.forEach((element, index) => {
+    //   let tableRef = document.getElementById('zahlenArray');
+    //   let newRow=tableRef.insertRow();
+    //   let insertIndex=newRow.insertCell(0)
+    //   let insertNumber=newRow.insertCell(1)
 
-      let indexText = document.createTextNode(index)
-      insertIndex.appendChild(indexText)
-      let numberText = document.createTextNode(element)
-      insertNumber.appendChild(numberText)
+    //   let indexText = document.createTextNode(index)
+    //   insertIndex.appendChild(indexText)
+    //   let numberText = document.createTextNode(element)
+    //   insertNumber.appendChild(numberText)
 
-    });
+    // });
     isTableEmpty=false
     // document.getElementById('form2').reset()     
     safeArrayOfNumbers=arr
@@ -177,7 +182,7 @@ function createTableOfNumbersArray(arr) {
     if (!isNewNumberTableEmpty) {
       deleteRows('arrayMitNeuerZahl')
     }
-    arr.sort((a,b)=>a-b)
+    // arr.sort((a,b)=>a-b)
     arr.forEach((element, index) => {
       let tableRef = document.getElementById('arrayMitNeuerZahl');
       let newRow=tableRef.insertRow();
@@ -199,7 +204,10 @@ function createTableOfNumbersArray(arr) {
 
 
 
-
+  function useStefanToCreateSortedArray(arr,n) {
+  arr=safeArrayOfNumbers;
+  
+  }
 
 
 
@@ -252,7 +260,7 @@ function deleteRows(id){
 let numberToCheck=0;
 let showIndex=0
 
-function addNumberToSortedArray(n,arr) {
+function addNumberToSortedArrayStefan(n,arr) {
 
 n=Number(document.getElementById('numberToAdd').value)
 arr=sortedArray
@@ -370,20 +378,57 @@ function textZahlHinzugefügt(){
   }
 }
 
+function arraySortToInsertNumber(arr, n) {
+  arr=sortedArray
+  n=Number(document.getElementById('numberToAdd').value)
+  arr.push(n)
+  sortedArray=arr.sort((a,b)=>a-b)
+  numberToCheck=n
+  showIndex=sortedArray.indexOf(n)
+
+
+}
+
+function zahlHinzufügenFindIndex(arr, n) {
+  arr=sortedArray
+  n=Number(document.getElementById('numberToAdd').value)
+  
+  let findIndex=arr.findIndex((number,index)=> n>=number && n< arr[index+1])+1
+
+  if (findIndex===-1){
+    if (n<arr[0]){
+      findIndex=0
+    }
+    else if (n>arr[arr.length-1]) {
+      findIndex=arr.length
+    }
+  }
+ arr.splice(findIndex, 0 , n)
+ numberToCheck=n
+ showIndex=sortedArray.indexOf(n)
+
+ 
+  
+
+  sortedArray=arr
+
+
+}
+
 function RuntimeCheck(functionToCheck) {
   var startTime = performance.now()
   this.functionToCheck=functionToCheck()
   var endTime = performance.now()
-   console.log(`${functionToCheck} `)
-   console.log(`was called it took ${endTime - startTime} milliseconds`)
+   console.log(`${functionToCheck.name}() Function was called it took ${endTime - startTime} milliseconds `)
+  
 }
 
-function zahlHinzufügenClicked(){
+function zahlHinzufügenStefanClicked(){
   let n=document.getElementById('numberToAdd').value
   if(n!==""){
-    RuntimeCheck(addNumberToSortedArray)    
+    RuntimeCheck(addNumberToSortedArrayStefan)    
     textZahlHinzugefügt()
-    tableWithNewNumber()
+    // tableWithNewNumber()
     colorNewNumber()
     resetInput('form3')
     console.log(sortedArray)
@@ -394,14 +439,40 @@ function zahlHinzufügenClicked(){
   
 }
 
+function zahlHinzufügenClickedArraySort() {
+  let n=document.getElementById('numberToAdd').value
+  if(n!==""){
+  RuntimeCheck(arraySortToInsertNumber)
+  textZahlHinzugefügt()
+  // tableWithNewNumber()
+  // colorNewNumber()
+  resetInput('form3')
+  console.log(sortedArray)
+  
+  }
+  showIndex=0
+  checkIndex=0
+}
+
+function zahlHinzufügenFindIndexClicked(){
+  let n=document.getElementById('numberToAdd').value
+  if(n!==""){
+    RuntimeCheck(zahlHinzufügenFindIndex)
+    textZahlHinzugefügt()
+    resetInput('form3')
+    console.log(sortedArray)
+  }
+}
+
 function generateNumbersClicked(){
   createTableOfNumbersArray()
   resetInput('form2')
+  console.log(safeArrayOfNumbers)
 }
 
 function sortNumbersButtonClicked(){
   RuntimeCheck(sortTableOfNumbersArray)
-  createSortedArrayTable()
+  // createSortedArrayTable()
   
   console.log(sortedArray)
 }
@@ -419,12 +490,12 @@ for(let i=0;i<rows.length;i++){
 }
 }
 }
-  let checkEnterField=document.getElementById('numberToAdd')
+  // let checkEnterField=document.getElementById('numberToAdd')
 
-  checkEnterField.addEventListener('keypress',function(e){
-    if (e.key==='Enter') {
-      e.preventDefault();
-      zahlHinzufügenClicked();
-      console.log('enter pressed')
-    }
-  })
+  // checkEnterField.addEventListener('keypress',function(e){
+  //   if (e.key==='Enter') {
+  //     e.preventDefault();
+  //     zahlHinzufügenClicked();
+  //     console.log('enter pressed')
+  //   }
+  // })
