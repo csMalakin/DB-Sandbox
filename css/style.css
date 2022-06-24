@@ -27,11 +27,21 @@ body {
 h2 {
      height: 3em;
 }
+p {
+     margin: 0.5em 0
+}
 .input, .numbersInput {
      border: solid black 1px;
-     margin: 5em auto;
+     margin: 0 auto;
      max-width: 30em;
      padding: 2em;
+     margin-top: 1em;
+
+}
+
+.numbersInput {
+     max-width: 100%;
+     margin: 5em;
 }
 .flex-outer li {
      display: flex;

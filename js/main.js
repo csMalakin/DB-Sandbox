@@ -105,7 +105,7 @@ function generateNumbers(amount, min, max) {
   let numbers=[]
   amount=Number(document.querySelector('#amountNumbers').value)
   min=Number(document.querySelector('#startNumbers').value)
-  max=Number(document.querySelector('#endNumbers').value)
+  max=Number(document.querySelector('#endNumbers').value)+1
 
   for (let i=0; i<amount; i++) {
     let x=Math.floor(Math.random()*(max-min))+min
@@ -123,7 +123,7 @@ function createTableOfNumbersArray(arr) {
     arr=generateNumbers()
     RuntimeCheck(generateNumbers);
     if (!isTableEmpty) {
-      deleteRows('zahlenArray')
+      // deleteRows('zahlenArray')
     }
 
     // arr.forEach((element, index) => {
@@ -149,7 +149,7 @@ function createTableOfNumbersArray(arr) {
   function sortTableOfNumbersArray(arr) {
     arr=safeArrayOfNumbers;
     if (!isSortedEmpty) {
-      deleteRows('zahlenArraySortiert')
+      // deleteRows('zahlenArraySortiert')
     }
     arr.sort((a,b)=>a-b)
     
@@ -180,7 +180,7 @@ function createTableOfNumbersArray(arr) {
   function tableWithNewNumber(arr) {
     arr=sortedArray;
     if (!isNewNumberTableEmpty) {
-      deleteRows('arrayMitNeuerZahl')
+    //   deleteRows('arrayMitNeuerZahl')
     }
     // arr.sort((a,b)=>a-b)
     arr.forEach((element, index) => {
@@ -364,8 +364,13 @@ sortedArray=arr
 }
 
 
+function printTimeToDom(time) {
+  document.querySelector('#timeItTook').innerText =  `Es hat ${time} millisekunden gedauert um die Zahl einzusortieren`
+}
 
-
+function sortedMessage() {
+  document.querySelector('#sortedMessage').innerText= `Das Array wurde sortiert die kleinste Zahl ist ${sortedArray[0]} und die größte Zahl ist  ${sortedArray[sortedArray.length-1]}`
+}
 
 function textZahlHinzugefügt(){
   let n=document.getElementById('numberToAdd').value
@@ -377,6 +382,17 @@ function textZahlHinzugefügt(){
 
   }
 }
+
+function textFieldCreatedArray(amount,start,end) {
+  amount=document.getElementById('amountNumbers').value
+  start=document.getElementById('startNumbers').value
+  end=document.getElementById('endNumbers').value
+  let textfield=document.querySelector('#textFieldForGeneration')
+  textfield.innerText=`Es wurde ein Array von ${amount} Zahlen zwischen ${start} und ${end} erstellt`
+
+}
+
+
 
 function arraySortToInsertNumber(arr, n) {
   arr=sortedArray
@@ -420,19 +436,20 @@ function RuntimeCheck(functionToCheck) {
   this.functionToCheck=functionToCheck()
   var endTime = performance.now()
    console.log(`${functionToCheck.name}() Function was called it took ${endTime - startTime} milliseconds `)
+   return endTime - startTime
   
 }
 
 function zahlHinzufügenStefanClicked(){
   let n=document.getElementById('numberToAdd').value
   if(n!==""){
-    RuntimeCheck(addNumberToSortedArrayStefan)    
+    let time=RuntimeCheck(addNumberToSortedArrayStefan)    
     textZahlHinzugefügt()
     // tableWithNewNumber()
-    colorNewNumber()
+    // colorNewNumber()
     resetInput('form3')
     console.log(sortedArray)
-   
+    printTimeToDom(time)
   }
   showIndex=0
   checkIndex=0
@@ -442,12 +459,13 @@ function zahlHinzufügenStefanClicked(){
 function zahlHinzufügenClickedArraySort() {
   let n=document.getElementById('numberToAdd').value
   if(n!==""){
-  RuntimeCheck(arraySortToInsertNumber)
+    let time=RuntimeCheck(arraySortToInsertNumber)
   textZahlHinzugefügt()
   // tableWithNewNumber()
   // colorNewNumber()
   resetInput('form3')
   console.log(sortedArray)
+  printTimeToDom(time)
   
   }
   showIndex=0
@@ -457,22 +475,26 @@ function zahlHinzufügenClickedArraySort() {
 function zahlHinzufügenFindIndexClicked(){
   let n=document.getElementById('numberToAdd').value
   if(n!==""){
-    RuntimeCheck(zahlHinzufügenFindIndex)
+    let time=RuntimeCheck(zahlHinzufügenFindIndex)
     textZahlHinzugefügt()
     resetInput('form3')
     console.log(sortedArray)
+    printTimeToDom(time)
   }
 }
 
 function generateNumbersClicked(){
-  createTableOfNumbersArray()
+  createTableOfNumbersArray()  
+  textFieldCreatedArray()
   resetInput('form2')
   console.log(safeArrayOfNumbers)
+
 }
 
 function sortNumbersButtonClicked(){
   RuntimeCheck(sortTableOfNumbersArray)
   // createSortedArrayTable()
+  sortedMessage()
   
   console.log(sortedArray)
 }
@@ -499,3 +521,4 @@ for(let i=0;i<rows.length;i++){
   //     console.log('enter pressed')
   //   }
   // })
+
