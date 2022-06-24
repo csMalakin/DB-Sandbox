@@ -395,7 +395,7 @@ function zahlHinzufügenFindIndex(arr, n) {
   
   let findIndex=arr.findIndex((number,index)=> n>=number && n< arr[index+1])+1
 
-  if (findIndex===-1){
+  if (findIndex===0){
     if (n<arr[0]){
       findIndex=0
     }
