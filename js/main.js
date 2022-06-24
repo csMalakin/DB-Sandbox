@@ -8,8 +8,11 @@ let generateNumbersButton = document.getElementById('generateNumbers')
 let sortNumbersButton=document.getElementById('zahlenSortieren')
 let zahlHinzufügenStefan=document.getElementById('zahlHinzufügenStefan')
 let zahlHinzufügenArraySort=document.getElementById('zahlHinzufügenArraySort')
-
 let zahlHinzufügenFindIndexButton=document.getElementById('zahlHinzufügenFindIndex')
+let sortNumbersStefanButton=document.getElementById('zahlenSortierenStefan')
+
+
+
 
 
 add.addEventListener('click', submit)
@@ -19,6 +22,7 @@ sortNumbersButton.addEventListener('click', sortNumbersButtonClicked)
 zahlHinzufügenStefan.addEventListener('click', zahlHinzufügenStefanClicked )
 zahlHinzufügenArraySort.addEventListener('click', zahlHinzufügenClickedArraySort )
 zahlHinzufügenFindIndexButton.addEventListener('click', zahlHinzufügenFindIndexClicked)
+sortNumbersStefanButton.addEventListener('click', sortNumbersStefanButtonClicked)
 
 const mitarbeiter= [];
 
@@ -204,11 +208,130 @@ function createTableOfNumbersArray(arr) {
 
 
 
-  function useStefanToCreateSortedArray(arr,n) {
+  function useStefanToCreateSortedArray(arr) {
   arr=safeArrayOfNumbers;
   
-  }
+  let output=[]
+  
 
+  
+  
+  arr.map((element,index)=>{
+    if (index===0){
+      output.splice(0,0,element)
+      
+      }
+    else if (index===1){
+      if (element<output[0]){
+        output.splice(0,0,element)
+        
+      }
+      else {
+        output.splice(1,0,element)
+        
+      }
+    }
+    else if (index>1){
+     
+   
+      
+      let test=element-(output[0])
+      let dif=(output[output.length-1]-output[0])
+      let steps=Math.round(dif/(output.length-1))
+      let checkIndex=Math.floor(test/steps)+1
+      
+      
+      
+      if (element<output[checkIndex]&&element>output[0]){
+  
+        while (element<output[checkIndex]) {
+          
+          checkIndex--   
+          // console.log(checkIndex)
+          
+        } if(element>=output[checkIndex]&&element<=output[checkIndex+1]) {
+          output.splice(checkIndex+1,0,element)
+          numberToCheck=element
+          showIndex=checkIndex+1
+          checkIndex=Math.floor(test/steps)+1
+          if (showIndex<0){
+           showIndex=0
+          }
+      }
+      checkIndex=0}
+      
+      
+      
+      
+      else if(element>=output[checkIndex]&&element<=output[checkIndex+1]) {
+        output.splice(checkIndex+1,0,element)
+        numberToCheck=element
+        showIndex=checkIndex+1
+        checkIndex=Math.floor(test/steps)+1
+        
+        if (showIndex<0){
+         showIndex=0
+        }
+       
+       
+      }
+      
+      
+      else if(element>output[checkIndex]&&element>output[checkIndex+1] && element<output[output.length-1]){
+        
+        while (element>output[checkIndex+1]) {
+          
+          checkIndex++
+        
+          
+          // console.log(checkIndex)
+          
+        } if(element>=output[checkIndex]&&element<=output[checkIndex+1]) {
+          output.splice(checkIndex+1,0,element)
+          numberToCheck=element
+          showIndex=checkIndex+1
+          checkIndex=Math.floor(test/steps)+1
+          
+          
+          if (showIndex<0){
+           showIndex=0
+          }
+      }
+      checkIndex=0}
+      
+      
+      
+      
+      else if(element>=output[output.length-1]){
+        output.splice(output.length,0,element)
+      numberToCheck=element
+      showIndex=output.length-1
+      if (showIndex<0){
+        showIndex=0
+       }
+      
+      }
+      else if(element<=output[0]){
+        output.splice(0,0,element)
+        numberToCheck=element
+        checkIndex=Math.floor(test/steps)+1
+        showIndex=checkIndex
+        if (showIndex<0){
+          showIndex=0
+         }
+        
+      }
+      
+      
+      
+        }
+
+
+    })
+    sortedArray=output
+    
+  }
+  
 
 
 
@@ -497,6 +620,11 @@ function sortNumbersButtonClicked(){
   sortedMessage()
   
   console.log(sortedArray)
+}
+function sortNumbersStefanButtonClicked(){
+RuntimeCheck(useStefanToCreateSortedArray)
+sortedMessage()
+console.log(sortedArray)
 }
 
 function colorNewNumber(){
