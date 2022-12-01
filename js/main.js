@@ -14,7 +14,7 @@ let zahlHinzufügenFindIndexButton=document.getElementById('zahlHinzufügenFindI
 
 add.addEventListener('click', submit)
 generateNumbersButton.addEventListener('click', generateNumbersClicked)
-dlAnchorElem.addEventListener('click',downloadFile)
+// dlAnchorElem.addEventListener('click',downloadFile)
 sortNumbersButton.addEventListener('click', sortNumbersButtonClicked)
 zahlHinzufügenStefan.addEventListener('click', zahlHinzufügenStefanClicked )
 zahlHinzufügenArraySort.addEventListener('click', zahlHinzufügenClickedArraySort )
